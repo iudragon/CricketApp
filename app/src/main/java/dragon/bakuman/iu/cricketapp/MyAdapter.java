@@ -51,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 final String matchId = model.getId();
                 final String date = model.getDate();
 
-                String[] options = {"Match Detail", "Players List"};
+                String[] options = {"Match Detail", "Players List", "Match Summary"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
                 builder.setTitle("Choose Option");
@@ -72,6 +72,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
                         if (which == 1) {
                             Intent intent = new Intent(context, PlayersActivity.class);
+                            intent.putExtra("match_id", matchId);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        }
+
+                        if (which == 2) {
+                            Intent intent = new Intent(context, MatchSummaryActivity.class);
                             intent.putExtra("match_id", matchId);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
