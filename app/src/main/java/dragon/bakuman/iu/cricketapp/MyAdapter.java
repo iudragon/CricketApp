@@ -1,6 +1,8 @@
 package dragon.bakuman.iu.cricketapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -46,14 +48,40 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
-                String matchId = model.getId();
-                String date = model.getDate();
+                final String matchId = model.getId();
+                final String date = model.getDate();
 
-                Intent intent = new Intent(context, MatchDetailActivity.class);
-                intent.putExtra("match_id", matchId);
-                intent.putExtra("date", date);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                String[] options = {"Match Detail", "Players List"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                builder.setTitle("Choose Option");
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        if (which == 0) {
+                            Intent intent = new Intent(context, MatchDetailActivity.class);
+                            intent.putExtra("match_id", matchId);
+                            intent.putExtra("date", date);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        }
+
+                        if (which == 1) {
+                            Intent intent = new Intent(context, PlayersActivity.class);
+                            intent.putExtra("match_id", matchId);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        }
+                    }
+                });
+
+                builder.create().show();
+
 
             }
         });
