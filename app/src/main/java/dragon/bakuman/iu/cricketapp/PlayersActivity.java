@@ -62,7 +62,7 @@ public class PlayersActivity extends AppCompatActivity {
 
                 pd.dismiss();
 
-                try{
+                try {
 
                     JSONArray squadArray = new JSONObject(response).getJSONArray("squad");
 
@@ -78,20 +78,23 @@ public class PlayersActivity extends AppCompatActivity {
                     team1NameTv.setText(team1Name);
                     team2NameTv.setText(team2Name);
 
-                    for (int i = 0; i < team1Array.length(); i++){
+                    for (int i = 0; i < team1Array.length(); i++) {
 
-                        String team1 =  team1Array.getJSONObject(i).getString("name");
-                        team1PlayersTv.append(team1 + "\n");
+                        String team1 = team1Array.getJSONObject(i).getString("name");
+                        team1PlayersTv.append((i + 1) + " " + team1 + "\n");
+
+                    }
+
+                    for (int i = 0; i < team2Array.length(); i++) {
+
+                        String team2 = team2Array.getJSONObject(i).getString("name");
+                        team2PlayersTv.append((i + 1) + ") " + team2 + "\n");
+
 
                     }
 
 
-
-
-
-
-
-                } catch (Exception e){
+                } catch (Exception e) {
 
                     Toast.makeText(PlayersActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -101,6 +104,7 @@ public class PlayersActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Toast.makeText(PlayersActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
