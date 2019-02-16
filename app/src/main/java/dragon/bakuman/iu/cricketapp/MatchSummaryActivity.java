@@ -22,7 +22,8 @@ public class MatchSummaryActivity extends AppCompatActivity {
 
     String url = "http://cricapi.com/api/fantasySummary?apikey=3qGaApK610aiYV2ubVQLJjhTEYA2&unique_id=";
 
-    TextView fieldT1TitleTv, fieldT1DetailTv, fieldT2TitleTv, fieldT2DetailTv;
+    TextView fieldT1TitleTv, fieldT1DetailTv, fieldT2TitleTv, fieldT2DetailTv,
+            bowlT1TitleTv, bowlT1DetailTv, bowlT2TitleTv, bowlT2DetailTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,12 @@ public class MatchSummaryActivity extends AppCompatActivity {
         fieldT1DetailTv = findViewById(R.id.fieldT1DetailTv);
         fieldT2TitleTv = findViewById(R.id.fieldT2TitleTv);
         fieldT2DetailTv = findViewById(R.id.fieldT2DetailTv);
+
+
+        bowlT1TitleTv = findViewById(R.id.bowlT1TitleTv);
+        bowlT1DetailTv = findViewById(R.id.bowlT1DetailTv);
+        bowlT2TitleTv = findViewById(R.id.bowlT2TitleTv);
+        bowlT2DetailTv = findViewById(R.id.bowlT2DetailTv);
 
 
         loadData();
@@ -67,6 +74,7 @@ public class MatchSummaryActivity extends AppCompatActivity {
                     JSONObject dataObject = jsonObject.getJSONObject("data");
 
                     JSONArray fieldJArray = dataObject.getJSONArray("fielding");
+                    JSONArray bowlJArray = dataObject.getJSONArray("bowling");
 
                     JSONObject field0 = fieldJArray.getJSONObject(0);
                     JSONObject field1 = fieldJArray.getJSONObject(1);
@@ -94,7 +102,6 @@ public class MatchSummaryActivity extends AppCompatActivity {
                     }
 
 
-
                     // for 2
 
                     fieldT2TitleTv.setText(field2Title);
@@ -109,6 +116,56 @@ public class MatchSummaryActivity extends AppCompatActivity {
                         String stumped = field2ScoresJArray.getJSONObject(i).getString("stumped");
 
                         fieldT2DetailTv.append("Name: " + name + "\nBowled: " + bowled + "\nCatch: " + catchh + "\nLBW: " + lbw + "\nRunOut: " + runout + "\nStumped: " + stumped + "\n\n");
+
+                    }
+
+
+                    JSONObject bowl0 = bowlJArray.getJSONObject(0);
+                    JSONObject bowl1 = bowlJArray.getJSONObject(1);
+
+                    String bowl1Title = bowl0.getString("title");
+                    String bowl2Title = bowl1.getString("title");
+
+
+                    JSONArray bowl1ScoresJArray = bowl0.getJSONArray("scores");
+                    JSONArray bowl2ScoresJArray = bowl1.getJSONArray("scores");
+
+                    bowlT1TitleTv.setText(bowl1Title);
+                    for (int i = 0; i < bowl1ScoresJArray.length(); i++) {
+
+                        String bowlerName = bowl1ScoresJArray.getJSONObject(i).getString("bowler");
+                        String overs = bowl1ScoresJArray.getJSONObject(i).getString("O");
+                        String wickets = bowl1ScoresJArray.getJSONObject(i).getString("W");
+                        String runs = bowl1ScoresJArray.getJSONObject(i).getString("R");
+                        String zeroes = bowl1ScoresJArray.getJSONObject(i).getString("0s");
+                        String fours = bowl1ScoresJArray.getJSONObject(i).getString("4s");
+                        String sixes = bowl1ScoresJArray.getJSONObject(i).getString("6s");
+                        String m = bowl1ScoresJArray.getJSONObject(i).getString("M");
+                        String econ = bowl1ScoresJArray.getJSONObject(i).getString("Econ");
+
+
+                        bowlT1DetailTv.append("Name: " + bowlerName + "\n:Overs: " + overs + "\nWickets: " + wickets + "\nRuns: " + runs + "\n0s: " + zeroes + "\n4s: " + fours + "\n6s: " + sixes + "\nM: " + m + "\nEcon: " + econ + "\n\n");
+
+                    }
+
+
+                    // for 2 bowl
+
+                    bowlT2TitleTv.setText(bowl2Title);
+                    for (int i = 0; i < bowl2ScoresJArray.length(); i++) {
+
+                        String bowlerName = bowl2ScoresJArray.getJSONObject(i).getString("bowler");
+                        String overs = bowl2ScoresJArray.getJSONObject(i).getString("O");
+                        String wickets = bowl2ScoresJArray.getJSONObject(i).getString("W");
+                        String runs = bowl2ScoresJArray.getJSONObject(i).getString("R");
+                        String zeroes = bowl2ScoresJArray.getJSONObject(i).getString("0s");
+                        String fours = bowl2ScoresJArray.getJSONObject(i).getString("4s");
+                        String sixes = bowl2ScoresJArray.getJSONObject(i).getString("6s");
+                        String m = bowl2ScoresJArray.getJSONObject(i).getString("M");
+                        String econ = bowl2ScoresJArray.getJSONObject(i).getString("Econ");
+
+
+                        bowlT2DetailTv.append("Name: " + bowlerName + "\nOvers: " + overs + "\nWickets: " + wickets + "\nRuns: " + runs + "\n0s: " + zeroes + "\n4s: " + fours + "\n6s: " + sixes + "\nM: " + m + "\nEcon: " + econ + "\n\n");
 
                     }
 
