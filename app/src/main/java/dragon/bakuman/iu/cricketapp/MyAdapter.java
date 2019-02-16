@@ -1,6 +1,7 @@
 package dragon.bakuman.iu.cricketapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
-        Model model = modelList.get(position);
+        final Model model = modelList.get(position);
         viewHolder.team1Tv.setText(model.getTeam1());
         viewHolder.team2Tv.setText(model.getTeam2());
         viewHolder.matchTypeTv.setText(model.getMatchType());
@@ -44,6 +45,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String matchId = model.getId();
+                String date = model.getDate();
+
+                Intent intent = new Intent(context, MatchDetailActivity.class);
+                intent.putExtra("match_id", matchId);
+                intent.putExtra("date", date);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
             }
         });
